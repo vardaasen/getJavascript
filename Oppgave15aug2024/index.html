@@ -1,3 +1,165 @@
-Per ▼
-Pål ▼▲
-Espen ▲
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container {
+            display: flex;
+            flex-direction: row;
+        }
+
+        #innhold {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #knapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-left: 10px;
+        }
+
+        .element {
+            
+            border: 0.1em dotted;
+            height: 30px;
+        }
+
+        .button {
+            border: 0.1em dotted;
+            width: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+
+        .oppned {
+            width: 20px;
+            height: 15px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 5px;
+            
+        }
+    </style>
+</head>
+<body onload="innholdStart()">
+
+<div id="app"></div>
+
+<script>
+    function innholdStart() {
+        document.getElementById('app').innerHTML = `
+            <div id="container">
+                <div id="innhold">
+                    <span class="element" id="p1">Per</span>
+                    <span class="element" id="p2">Pål</span>
+                    <span class="element" id="p3">Espen</span>
+                </div>
+                <div id="knapper">
+                    <span class="element button" onclick="p2p1p3()">▼</span>
+                    <span class="element button oppned" onclick="p2p1p3()">▲</span>
+                    <span class="element button oppned" onclick="p1p3p2()">▼</span>
+                    <span class="element button" onclick="p1p3p2()">▲</span>
+                </div>
+            </div>    
+        `;
+    }
+
+    function p2p1p3() {
+        document.getElementById('app').innerHTML = `
+            <div id="container">
+                <div id="innhold">
+                    <span class="element" id="p2">Pål</span>
+                    <span class="element" id="p1">Per</span>
+                    <span class="element" id="p3">Espen</span>
+                </div>
+                <div id="knapper">
+                    <span class="element button" onclick="innholdStart()">▼</span>
+                    <span class="element button oppned" onclick="innholdStart()">▲</span>
+                    <span class="element button oppned" onclick="p2p3p1()">▼</span>
+                    <span class="element button" onclick="p2p3p1()">▲</span>
+                </div>
+            </div>    
+        `;
+    }
+
+    function p1p3p2() {
+        document.getElementById('app').innerHTML = `
+            <div id="container">
+                <div id="innhold">
+                    <span class="element" id="p1">Per</span>
+                    <span class="element" id="p3">Espen</span>
+                    <span class="element" id="p2">Pål</span>
+                </div>
+                <div id="knapper">
+                    <span class="element button" onclick="p3p1p2()">▼</span>
+                    <span class="element button oppned" onclick="p3p1p2()">▲</span>
+                    <span class="element button oppned" onclick="innholdStart()">▼</span>
+                    <span class="element button" onclick="innholdStart()">▲</span>
+                </div>
+            </div>    
+        `;
+    }
+
+    function p2p3p1() {
+        document.getElementById('app').innerHTML = `
+            <div id="container">
+                <div id="innhold">
+                    <span class="element" id="p2">Pål</span>
+                    <span class="element" id="p3">Espen</span>
+                    <span class="element" id="p1">Per</span>
+                </div>
+                <div id="knapper">
+                    <span class="element button" onclick="p3p2p1()">▼</span>
+                    <span class="element button oppned" onclick="p3p2p1()">▲</span>
+                    <span class="element button oppned" onclick="p2p1p3()">▼</span>
+                    <span class="element button" onclick="p2p1p3()">▲</span>
+                </div>
+            </div>    
+        `;
+    }
+
+    function p3p1p2() {
+        document.getElementById('app').innerHTML = `
+            <div id="container">
+                <div id="innhold">
+                    <span class="element" id="p3">Espen</span>
+                    <span class="element" id="p1">Per</span>
+                    <span class="element" id="p2">Pål</span>
+                </div>
+                <div id="knapper">
+                    <span class="element button" onclick="p1p3p2()">▼</span>
+                    <span class="element button oppned" onclick="p1p3p2()">▲</span>
+                    <span class="element button oppned" onclick="p3p2p1()">▼</span>
+                    <span class="element button" onclick="p3p2p1()">▲</span>
+                </div>
+            </div>    
+        `;
+    }
+    function p3p2p1() {
+        document.getElementById('app').innerHTML = `
+            <div id="container">
+                <div id="innhold">
+                    <span class="element" id="p3">Espen</span>
+                    <span class="element" id="p2">Pål</span>
+                    <span class="element" id="p1">Per</span>
+                </div>
+                <div id="knapper">
+                    <span class="element button" onclick="p2p3p1()">▼</span>
+                    <span class="element button oppned" onclick="p2p3p1()">▲</span>
+                    <span class="element button oppned" onclick="p3p1p2()">▼</span>
+                    <span class="element button" onclick="p3p1p2()">▲</span>
+                </div>
+            </div>    
+        `;
+    }
+</script>
+
+</body>
+</html>
