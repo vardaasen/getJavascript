@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Move Image on Click</title>
+    <style>
+        .container {
+            flex-wrap: nowrap; /* Ensure items don't wrap onto a new line */
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: space-around;
+            align-content: center;
+            border: solid;
+            border-width: 0.3rem;
+            gap: 1vw;
+            width: 100vw;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .item, .img {
+            flex-basis: 25%;
+            flex-shrink: 0; /* Prevent shrinking */
+            font-family: monospace;
+            font-size: 0.7em;
+            border: dashed;
+            border-width: 0.2rem;
+            box-sizing: border-box;
+        }
+        .img > img {
+    display: inline-block; /* Ensure image is treated as inline within its flex item */
+    width: 100px;
+    box-sizing: border-box;
+}
+    </style>
+</head>
+<body class="container">
+    <span class="item">The old attic was a treasure trove of forgotten memories.</span>
+    <span class="item">Dust-covered books lined the shelves, their pages yellowed with age.</span>
+    <span class="item">A trunk in the corner held vintage clothing, each piece telling its own story.</span>
+    <span class="item">Faded photographs were scattered across an antique desk, frozen moments in time.</span>
+    <span class="item">An ornate mirror leaned against the wall, its silver surface slightly tarnished.</span>
+    <span class="item">A collection of antique clocks sat silently, their hands stopped at various hours.</span>
+    <span class="item">Delicate porcelain dolls peered out from a weathered dollhouse, their painted smiles unwavering.</span>
+    <span class="item">Stacks of vinyl records stood like sentinels, guarding the music of bygone eras.</span>
+    <span class="item">In the rafters, an old bicycle hung suspended, its wheels yearning to spin once more.</span>
+    <span class="img"><img src="img/img1.avif"></span>
+
+    <script>
+        const imgElement = document.querySelector('.img');
+        const totalItems = 10; // 9 items + 1 image
+        let currentOrder = 1;
+
+        document.addEventListener('click', () => {
+            // Increment the order
+            currentOrder++;
+
+            // Reset if we exceed the number of items
+            if (currentOrder > totalItems) {
+                currentOrder = 1;
+            }
+
+            // Update the order of the image
+            imgElement.style.order = currentOrder;
+
+            // Update orders for other items
+            let otherOrder = 1;
+            document.querySelectorAll('.item').forEach(item => {
+                if (otherOrder === currentOrder) {
+                    otherOrder++;
+                }
+                item.style.order = otherOrder;
+                otherOrder++;
+            });
+        });
+    </script>
+</body>
+</html>
