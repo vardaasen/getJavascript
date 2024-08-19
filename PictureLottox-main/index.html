@@ -3,44 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Memory Game / bildelotto</title>
     <style>
-        #board{
+        /* Definerer layouten for spillebrettet */
+        #board {
             display: grid;
-            grid-template-columns: repeat(4, 200px);
-            grid-template-rows: repeat(4, 200px);
+            grid-template-columns: repeat(4, 200px); /* 4 kolonner, hver 200px bred */
+            grid-template-rows: repeat(4, 200px);    /* 4 rader, hver 200px høy */
+            gap: 5px; /* Mellomrom mellom brikker */
         }
 
-        #board > div{
+        /* Stil for hver brikke på brettet */
+        #board > div {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid gray;
-            background-color: darkgray;
+            justify-content: center; /* Sentrerer innhold horisontalt */
+            align-items: center;     /* Sentrerer innhold vertikalt */
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            cursor: pointer; /* Viser håndpeker når man hover over brikker */
         }
-        img{
-            width: 100%;
+
+        /* Hover-effekt for brikkene */
+/*         #board > div:hover {
+            background-color: #e0e0e0;
+        } */
+
+        /* Stil for bildene i brikkene */
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            visibility: hidden; /* Bilder er skjult som standard */
         }
     </style>
 </head>
-<body>
-    <div id="board">
-        <div><img src="img/dog.jpg"/></div>
-        <div><img src="img/frog.jpg"/></div>
-        <div><img src="img/horse.jpg"/></div>
-        <div><img src="img/chicken.jpg"/></div>
-        <div><img src="img/spider.jpg"/></div>
-        <div><img src="img/frog.jpg"/></div>
-        <div><img src="img/spider.jpg"/></div>
-        <div><img src="img/tiger.jpg"/></div>
-        <div><img src="img/chicken.jpg"/></div>
-        <div><img src="img/dog.jpg"/></div>
-        <div><img src="img/elephant.jpg"/></div>
-        <div><img src="img/cat.gif"/></div>
-        <div><img src="img/cat.gif"/></div>
-        <div><img src="img/elephant.jpg"/></div>
-        <div><img src="img/horse.jpg"/></div>
-        <div></div>
-    </div>
+<body onload="startSpillebrett()">
+    <div id="board"></div>
+    <script>
+        // Globale variabler for å holde styr på spilltilstand
+        let ettbildesynlig = null;    // Holder styr på kilden til det første bildet som er vendt
+        let selvebildetaggen = null;  // Referanse til det første bildeelementet som er vendt
+
+        // Funksjon for å sette opp spillebrettet
+        // Mer om DOM-manipulasjon: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Manipulating_documents
+        function startSpillebrett() {
+            document.getElementById("board").innerHTML = /*html*/`
+                <div onclick="klikkerpaabilde(this)"><img src="img/dog.jpg" alt="dog"/></div>
+                <div onclick="klikkerpaabilde(this)"><img src="img/frog.jpg" alt="frog"/></div>
+                <div onclick="klikkerpaabilde(this)"><img src="img/horse.jpg" alt="horse"/></div>
+                <div onclick="klikkerpaabilde(this)"><img src="img/spider.jpg" alt="spider"/></div>
+                <div onclick="klikkerpaabilde(this)"><img src="img/frog.jpg" alt="frog"/></div>
+                <div onclick="klikkerpaabilde(this)"><img src="img/chicken.jpg" alt="chicken"/></div>
+                <div onclick="klikkerpaabilde(this)"><img src="img/spider.jpg" alt="spider"/></div>
+                <div onclick="klikkerpaabilde(this)"><img src="img/tiger.jpg" alt="tiger"/></div>
+                <div onclick="klikkerpaabilde(this)"><img src="img/chicken.jpg" alt="chicken"/></div>
+                <div onclick="klikkerpaabilde(this)"><img src="img/dog.jpg" alt="dog"/></div>
+                <div onclick="klikkerpaabilde(this)"><img src="img/elephant.jpg" alt="elephant"/></div>
+                <div onclick="klikkerpaabilde(this)"><img src="img/cat.gif" alt="cat"/></div>
+                <div onclick="klikkerpaabilde(this)"><img src="img/cat.gif" alt="cat"/></div>
+                <div onclick="klikkerpaabilde(this)"><img src="img/elephant.jpg" alt="elephant"/></div>
+                <div onclick="klikkerpaabilde(this)"><img src="img/horse.jpg" alt="horse"/></div>
+                <div onclick="klikkerpaabilde(this)"><img src="img/tiger.jpg" alt="tiger"/></div>
+            `;
+        }
+
+        // Funksjon som håndterer klikk på en brikke
+        // Mer om funksjoner i JavaScript: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions
+        function klikkerpaabilde(element) {
+            // Bruker querySelector for å finne img-elementet innenfor den klikkede div-en
+            // Mer om querySelector: https://developer.mozilla.org/en-US/docs/Web/API/Element/querySelector
+            const img = element.querySelector('img');
+
+            // Hvis bildet allerede er synlig, gjør ingenting
+            if (img.style.visibility === 'visible') {
+                return;
+            }
+
+            // Hvis dette er det første bildet som blir klikket i denne runden
+            if (!ettbildesynlig) {
+                ettbildesynlig = img.src;     // Lagrer kilden til bildet
+                selvebildetaggen = img;       // Lagrer referanse til bildeelementet
+                img.style.visibility = 'visible'; // Viser bildet
+            // På dette punktet venter spillet på det andre klikket
+        } else {
+                // Andre klikk i runden
+                if (ettbildesynlig === img.src) {
+                    // Bildene matcher
+                    img.style.visibility = 'visible'; // Viser det andre bildet
+                    // Begge bildene forblir synlige fordi:
+                    // 1. Det første bildet ble gjort synlig i forrige runde
+                    // 2. Det andre bildet blir gjort synlig her
+                    // 3. Vi nullstiller variablene uten å skjule bildene
+                } else {
+                    // Bildene matcher ikke
+                    selvebildetaggen.style.visibility = 'hidden'; // Skjuler det første bildet igjen
+                    // Det andre bildet (img) forblir skjult siden vi aldri endret dets synlighet
+                }
+                
+                // Nullstiller for neste runde, uavhengig av om det var en match eller ikke
+                ettbildesynlig = null;
+                selvebildetaggen = null;
+                // Dette klargjør for et nytt første klikk i neste runde
+            }
+
+            // Merk: Nettleseren "husker" synlighetstilstanden til hvert bilde
+            // basert på deres style.visibility-egenskap, selv om JavaScript-variablene nullstilles.
+            
+            // Nøkkelpoeng:
+            // 1. Synlige bilder forblir synlige mellom rundene takket være CSS 'visibility' egenskapen
+            // 2. Matchende par forblir synlige fordi vi aldri skjuler dem igjen
+            // 3. For ikke-matchende par skjules kun det første bildet; det andre var aldri vist
+            // 4. Nullstilling av variabler påvirker ikke bildenes synlighet i nettleseren
+        }
+    </script>
 </body>
 </html>
