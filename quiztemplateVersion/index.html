@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praktisk Quiz App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #quizContainer {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 600px;
+            margin: auto;
+            background-color: #f9f9f9;
+        }
+        #question {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        #codeEditor {
+            width: 100%;
+            height: 150px;
+            font-family: monospace;
+            margin-bottom: 10px;
+        }
+        #result {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        #requirements {
+            color: gray;
+            font-style: italic;
+        }
+        #scoreContainer {
+            margin-top: 20px;
+        }
+        #navigationButtons {
+            margin-top: 10px;
+        }
+        button {
+            margin-right: 10px;
+        }
+        #progressChart {
+    max-width: 400px;
+    max-height: 400px;
+    width: 100%;
+    height: auto;
+}
+    </style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="quizContainer">
+        <div id="question">Spørsmål her...</div>
+        <div id="requirements">Krav her...</div>
+        <textarea id="codeEditor"></textarea>
+        <button onclick="runCode()">Kjør kode</button>
+        <div id="result"></div>
+        <div id="navigationButtons">
+            <button onclick="prevQuestion()">Forrige</button>
+            <button onclick="nextQuestion()">Neste</button>
+        </div>
+        <div id="scoreContainer">
+            <h3>Poeng: <span id="score">0</span></h3>
+            <h4>Besvarte spørsmål:</h4>
+            <ul id="answeredQuestions"></ul>
+        </div>
+        <div id="hint"></div>
+        <div id="styleHints"></div>
+    </div>
+    <div id="progressContainer">
+        <canvas id="progressChart"></canvas>
+        <div id="totalProgress"></div>
+    </div>
+
+    <script src="quizQuestions.js"></script>
+    <script src="quiz.js"></script>
+</body>
+</html>
